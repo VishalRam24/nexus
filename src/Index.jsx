@@ -1,5 +1,7 @@
 import React from "react";
-import { Icons } from "./components/ui.jsx";
+import { Icons, GITHUB_PATH } from "./components/ui.jsx";
+import FidelityExplainer from "./components/FidelityExplainer.jsx";
+import CodeBlock from "./components/CodeBlock.jsx";
 import pattern from "./assets/pattern_nexus.png";
 
 /**
@@ -39,16 +41,22 @@ const TAGS = [
   "CO₂ caps", "RPS / CES", "Reserves", "Rolling horizon",
 ];
 
-const SECTORS = [
-  { name: "Hydrogen", n: "17" }, { name: "Batteries", n: "23" },
-  { name: "Solar", n: "18" }, { name: "Wind", n: "6" },
-  { name: "Thermal", n: "41" }, { name: "Carbon capture", n: "11" },
-];
-
 const UNDER_HOOD = [
-  "Implicit-function-theorem gradients on the KKT system",
-  "Safeguarded Gauss–Newton on the analytic Jacobian",
-  "Identifiability read straight off where the Jacobian vanishes",
+  {
+    n: "01",
+    t: "Solve forward, as usual",
+    d: "A Rust assembler builds the LP/MILP/QP/SOCP and any solver you like runs it.",
+  },
+  {
+    n: "02",
+    t: "Differentiate the optimum",
+    d: "The implicit function theorem on the KKT system, with a small ridge so the LP gradient is well defined.",
+  },
+  {
+    n: "03",
+    t: "Recover, then admit the limits",
+    d: "Safeguarded Gauss–Newton on that Jacobian — and where the Jacobian vanishes, the data cannot identify the parameter, so it says so.",
+  },
 ];
 
 const DESKS = [
@@ -110,16 +118,46 @@ export default function Index() {
         <div className="container mx-auto items-center flex flex-wrap">
           <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
             <div className="pt-32 sm:pt-0">
-              <h2 className="font-semibold text-4xl text-ink-700">
-                Nexus — energy models that answer backwards.
+              <span className="text-xs font-bold uppercase tracking-widest text-flux-600">
+                A Python library for energy-system engineers
+              </span>
+              <h2 className="font-semibold text-4xl text-ink-700 mt-3">
+                Energy models that answer backwards.
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ink-500">
-                Every planning tool answers forward: given the costs, here is the
-                optimal plan. The expensive daily question is the reverse. Nexus
-                recovers the hidden inputs that make a digital twin match the
-                system you actually observe.
+                If you build energy-system digital twins in Python and optimise
+                them, Nexus does the whole forward job you do today —{" "}
+                <span className="text-ink-700 font-semibold">
+                  at exact parity with PyPSA and GenX, several times faster
+                </span>
+                .
               </p>
-              <div className="mt-12">
+              <p className="mt-3 text-lg leading-relaxed text-ink-500">
+                Then it does the part nothing else does: when the twin disagrees
+                with the real system, it tells you{" "}
+                <span className="text-ink-700 font-semibold">
+                  which of your inputs is wrong
+                </span>{" "}
+                — analytically, in a handful of solves instead of a
+                days-long sampling sweep.
+              </p>
+
+              <div className="flex flex-wrap gap-x-8 gap-y-3 mt-8">
+                {[
+                  ["0.000%", "objective gap vs PyPSA"],
+                  ["3.5–6×", "faster forward solves"],
+                  ["12 vs 426", "solves to recover an input"],
+                ].map(([v, l]) => (
+                  <div key={l}>
+                    <div className="text-xl font-bold text-flux-600 font-mono">{v}</div>
+                    <div className="text-xs text-ink-400 uppercase tracking-wide mt-0.5">
+                      {l}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-10">
                 <a
                   href="#install"
                   className="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-flux-500 active:bg-flux-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
@@ -300,41 +338,48 @@ export default function Index() {
             </div>
           </div>
 
-          {/* 2c — component tiles */}
+          {/* 2c — the component library, explained by animation */}
           <div className="flex flex-wrap items-center pt-32">
             <div className="w-full md:w-6/12 px-4 mr-auto ml-auto mt-32">
-              <div className="justify-center flex flex-wrap relative">
-                {SECTORS.map((s, i) => (
-                  <div key={s.name} className="my-4 w-full lg:w-6/12 px-4">
-                    <div
-                      className={
-                        "shadow-lg rounded-lg text-center p-8 " +
-                        (i % 3 === 0 ? "bg-flux-600" : i % 3 === 1 ? "bg-ink-700" : "bg-flux-700")
-                      }
-                    >
-                      <p className="text-lg text-white mt-4 font-semibold">{s.name}</p>
-                      <p className="text-sm text-white/70 mt-1">{s.n} components</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <FidelityExplainer />
             </div>
 
             <div className="w-full md:w-4/12 px-12 md:px-4 ml-auto mr-auto mt-48">
               <div className={badgeLg}>{Icons.factory}</div>
               <h3 className="text-3xl mb-2 font-semibold leading-normal text-ink-800">
-                223 components, 15 sectors
+                223 components, 15 sectors, many fidelities
               </h3>
               <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-ink-600">
-                Every component ships at several fidelity levels — empirical
-                curves, semi-empirical characteristics and lumped-physics models —
-                so you can trade accuracy for speed per component rather than per
-                study.
+                Fidelity is how much physics a component carries. The same LFP
+                battery can be a single efficiency curve, a state-of-charge model,
+                the same plus temperature, or a full equivalent-circuit network.
               </p>
               <p className="text-lg font-light leading-relaxed mt-0 mb-4 text-ink-600">
-                Hydrogen, batteries, solar, wind, thermal, hydro, biomass,
-                geothermal, power electronics, gas systems, carbon capture,
-                desalination and more.
+                You choose the cheapest level that still answers the question —
+                <span className="text-ink-800 font-normal">
+                  {" "}
+                  per component, not per study
+                </span>
+                . A capacity screen can run every component at F0 while the one
+                asset under investigation runs at F2.
+              </p>
+              <div className="flex flex-wrap gap-x-8 gap-y-3 mt-6">
+                <div>
+                  <div className="text-2xl font-bold text-flux-600">223</div>
+                  <div className="text-xs text-ink-500 uppercase tracking-wide">components</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-flux-600">15</div>
+                  <div className="text-xs text-ink-500 uppercase tracking-wide">sectors</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-flux-600">F0–F2</div>
+                  <div className="text-xs text-ink-500 uppercase tracking-wide">built for all</div>
+                </div>
+              </div>
+              <p className="text-sm text-ink-400 mt-4 leading-relaxed">
+                F3–F6 — distributed physics, AI surrogates and PINNs — are scaffolded
+                but not yet built.
               </p>
             </div>
           </div>
@@ -350,27 +395,32 @@ export default function Index() {
                   How the backward pass works
                 </h3>
                 <p className="mt-4 text-lg leading-relaxed text-ink-500">
-                  Differentiating through an optimisation is an established
-                  technique, and we borrow it openly. What is new is the use:
-                  recovering the techno-economic inputs of a real planning model
-                  from what it actually did.
+                  Three steps, and the third one is the part that keeps it
+                  honest.
                 </p>
                 <ul className="list-none mt-6">
                   {UNDER_HOOD.map((u) => (
-                    <li key={u} className="py-2">
-                      <div className="flex items-center">
+                    <li key={u.n} className="py-3">
+                      <div className="flex items-start">
+                        <span className="text-xs font-bold inline-flex items-center justify-center rounded-full text-flux-700 bg-white shadow w-8 h-8 mr-4 flex-shrink-0 font-mono">
+                          {u.n}
+                        </span>
                         <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-flux-600 bg-white mr-3">
-                            {Icons.check}
-                          </span>
-                        </div>
-                        <div>
-                          <h4 className="text-ink-500">{u}</h4>
+                          <h4 className="text-ink-800 font-semibold">{u.t}</h4>
+                          <p className="text-ink-500 text-sm leading-relaxed mt-1">
+                            {u.d}
+                          </p>
                         </div>
                       </div>
                     </li>
                   ))}
                 </ul>
+                <p className="text-sm text-ink-500 mt-4 leading-relaxed border-l-2 border-flux-500 pl-4">
+                  The mechanism is borrowed openly — OptNet, cvxpylayers,
+                  DiffOpt.jl. What is new is the use: recovering the
+                  techno-economic inputs of a real planning model from what it
+                  actually did.
+                </p>
               </div>
             </div>
 
@@ -457,6 +507,23 @@ export default function Index() {
             </div>
           </div>
 
+          {/* what stage 4 costs today, in numbers */}
+          <div className="flex flex-wrap pt-16 pb-24 text-center">
+            {[
+              ["426", "solves", "Sobol sampling, to reach 0.1% accuracy"],
+              ["12", "solves", "Nexus, recovered exactly — 36× fewer"],
+              ["6.3e-10", "gradient error", "vs finite differences, end to end"],
+              ["0.000%", "objective gap", "forward parity vs PyPSA on production runs"],
+            ].map(([v, unit, note]) => (
+              <div key={note} className="w-full sm:w-6/12 lg:w-3/12 px-4 mb-8 lg:mb-0">
+                <div className="text-4xl font-bold text-flux-400 font-mono">{v}</div>
+                <div className="text-xs uppercase tracking-widest text-white font-bold mt-1">
+                  {unit}
+                </div>
+                <div className="text-sm text-ink-300 mt-2 leading-relaxed">{note}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -538,13 +605,13 @@ export default function Index() {
             */}
             <div className="w-full md:w-4/12 px-4 mr-auto ml-auto mt-32 relative">
               <svg
-                viewBox="0 0 24 24"
+                viewBox="0 0 496 512"
                 fill="currentColor"
                 className="text-ink-700 absolute left-auto opacity-80 hidden md:block"
-                style={{ top: "-100px", right: "-100px", width: "40rem", height: "40rem" }}
+                style={{ top: "-120px", right: "-200px", width: "46rem", height: "47.5rem" }}
                 aria-hidden="true"
               >
-                <path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .5z" />
+                <path d={GITHUB_PATH} />
               </svg>
             </div>
           </div>
@@ -571,8 +638,8 @@ export default function Index() {
         </div>
 
         <div className="container mx-auto">
-          <div className="flex flex-wrap justify-center bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10">
-            <div className="w-full text-center lg:w-8/12">
+          <div className="flex flex-wrap justify-center bg-white shadow-xl rounded-lg -mt-64 py-16 px-8 md:px-12 relative z-10">
+            <div className="w-full text-center lg:w-10/12">
               <p className="text-4xl text-center">
                 <span role="img" aria-label="plug">
                   🔌
@@ -581,19 +648,54 @@ export default function Index() {
               <h3 className="font-semibold text-3xl text-ink-800">
                 Two packages, one install.
               </h3>
-              <p className="text-ink-500 text-lg leading-relaxed mt-4 mb-4">
+              <p className="text-ink-500 text-lg leading-relaxed mt-4 mb-8 max-w-2xl mx-auto">
                 Installing <span className="font-mono">nexus-energy</span> pulls in
                 the <span className="font-mono">nexus-opt</span> Rust core
                 automatically — no separate step, no Rust toolchain.
               </p>
 
-              <pre className="bg-ink-900 text-ink-200 rounded-lg p-5 overflow-x-auto text-sm font-mono text-left mt-6">
-                pip install nexus-energy
-              </pre>
-              <p className="text-sm text-ember-600 mt-3 font-semibold">
-                PyPI release pending — the wheel matrix is built and verified, but
-                the packages are not published yet. Install from source meanwhile.
-              </p>
+              <div className="max-w-2xl mx-auto">
+                <CodeBlock code="pip install nexus-energy" />
+                <p className="text-sm text-ember-600 mt-3 font-semibold text-left">
+                  PyPI release pending — the wheel matrix is built and verified,
+                  but the packages are not published yet.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap mt-12 -mx-3 text-left">
+                <div className="w-full lg:w-6/12 px-3 mb-6 lg:mb-0">
+                  <CodeBlock
+                    label="Economic dispatch in eight lines"
+                    code={`import nexus_energy as ne
+
+sys = ne.EnergySystem("my_system")
+elec = sys.add_bus("elec", carrier="electricity")
+
+sys.add_generator("solar", bus=elec, capacity=500, marginal_cost=0)
+sys.add_generator("gas",   bus=elec, capacity=200, marginal_cost=50)
+sys.add_load("demand", bus=elec, amount=300)
+
+result = sys.optimise()
+print(result.status, result.total_cost)
+# optimal 0.0`}
+                  />
+                </div>
+                <div className="w-full lg:w-6/12 px-3">
+                  <CodeBlock
+                    label="Recovering a hidden CO₂ price"
+                    code={`from nexus_energy.pypsa_compat import from_pypsa
+from nexus_energy.diff_bridge import fit_co2_price
+
+# any PyPSA network — no PyPSA needed to solve
+system = from_pypsa(network, line_model="transport")
+
+fit = fit_co2_price(system, observed_dispatch)
+
+print(fit.price, fit.n_solves, fit.converged)
+# 83.4  12  True`}
+                  />
+                </div>
+              </div>
 
               <div className="sm:block flex flex-col mt-10">
                 <a

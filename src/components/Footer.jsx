@@ -94,25 +94,9 @@ export default function Footer() {
           </div>
           <div className="w-full md:w-6/12 px-4 mx-auto text-center md:text-right">
             <div className="text-sm text-ink-400 py-1">
-              Page design based on{" "}
-              <a
-                href="https://github.com/creativetimofficial/notus-react"
-                target="_blank"
-                rel="noreferrer"
-                className="text-ink-500 hover:text-flux-600"
-              >
-                Notus React
-              </a>{" "}
-              © 2021{" "}
-              <a
-                href="https://www.creative-tim.com"
-                target="_blank"
-                rel="noreferrer"
-                className="text-ink-500 hover:text-flux-600"
-              >
-                Creative Tim
-              </a>{" "}
-              (MIT).
+              Designed &amp; built by{" "}
+              <span className="text-ink-600 font-semibold">Vishal Ram</span> ·
+              © 2026
             </div>
           </div>
         </div>
