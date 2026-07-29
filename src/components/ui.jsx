@@ -121,7 +121,7 @@ export function SectionHeading({ eyebrow, title, lede, dark = false }) {
  *     \/
  *     /\
  *
- * Three of them carry the flux green; only the down-right stroke is ink.
+ * Three of them are ink; only the down-right stroke carries the flux turquoise.
  */
 export function NexusMark({ className = "w-5 h-5" }) {
   return (
@@ -129,7 +129,7 @@ export function NexusMark({ className = "w-5 h-5" }) {
       {/* top-left, top-right and down-left */}
       <path
         d="M4.5 4.5 L12 12 L19.5 4.5 M12 12 L4.5 19.5"
-        stroke="#14b8a6"
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -137,7 +137,7 @@ export function NexusMark({ className = "w-5 h-5" }) {
       {/* down-right only */}
       <path
         d="M12 12 L19.5 19.5"
-        stroke="currentColor"
+        stroke="#14b8a6"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
