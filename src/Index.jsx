@@ -126,31 +126,17 @@ export default function Index() {
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ink-500">
                 Everything today&apos;s energy libraries do — expansion,
-                dispatch, unit commitment, power flow — only{" "}
+                dispatch, unit commitment, power flow — and does it{" "}
                 <span className="text-ink-700 font-semibold">
                   significantly faster
                 </span>
-                . Then what none of them do: it finds{" "}
+                . Then the part none of them do: when the model disagrees with
+                reality, it{" "}
                 <span className="text-ink-700 font-semibold">
-                  which of your inputs is wrong
-                </span>
-                , automatically.
+                  works backwards
+                </span>{" "}
+                to name the faulty assumption — a fuel cost, an efficiency.
               </p>
-
-              <div className="flex flex-wrap gap-x-8 gap-y-3 mt-8">
-                {[
-                  ["0.000%", "objective gap"],
-                  ["3.5–6×", "faster forward solves"],
-                  ["12 vs 426", "solves to recover an input"],
-                ].map(([v, l]) => (
-                  <div key={l}>
-                    <div className="text-xl font-bold text-flux-600 font-mono">{v}</div>
-                    <div className="text-xs text-ink-400 uppercase tracking-wide mt-0.5">
-                      {l}
-                    </div>
-                  </div>
-                ))}
-              </div>
 
               <div className="mt-10">
                 <a
