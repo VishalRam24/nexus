@@ -125,18 +125,21 @@ export default function Index() {
                 Energy models that answer backwards.
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ink-500">
-                For engineers building energy-system digital twins in Python.
-                Nexus matches PyPSA and GenX exactly, runs several times faster,
-                and tells you{" "}
+                Everything today&apos;s energy libraries do — expansion,
+                dispatch, unit commitment, power flow — only{" "}
                 <span className="text-ink-700 font-semibold">
-                  which input is wrong
-                </span>{" "}
-                — in a handful of solves, not a days-long sweep.
+                  significantly faster
+                </span>
+                . Then what none of them do: it finds{" "}
+                <span className="text-ink-700 font-semibold">
+                  which of your inputs is wrong
+                </span>
+                , automatically.
               </p>
 
               <div className="flex flex-wrap gap-x-8 gap-y-3 mt-8">
                 {[
-                  ["0.000%", "objective gap vs PyPSA"],
+                  ["0.000%", "objective gap"],
                   ["3.5–6×", "faster forward solves"],
                   ["12 vs 426", "solves to recover an input"],
                 ].map(([v, l]) => (
