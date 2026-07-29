@@ -63,9 +63,9 @@ export default function Footer() {
                 </span>
                 <ul className="list-unstyled">
                   {[
-                    ["#problem", "The problem"],
-                    ["#compare", "Comparison"],
-                    ["#benchmarks", "Benchmarks"],
+                    ["#what", "What it is"],
+                    ["#coverage", "Coverage"],
+                    ["#where", "Where it pays"],
                     ["#install", "Install"],
                   ].map(([h, l]) => (
                     <li key={h}>

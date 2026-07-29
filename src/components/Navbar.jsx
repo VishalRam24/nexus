@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Icons } from "./ui.jsx";
 
 const LINKS = [
-  { href: "#problem", label: "The problem" },
-  { href: "#approach", label: "The gap" },
-  { href: "#advantages", label: "Advantages" },
-  { href: "#compare", label: "Compare" },
-  { href: "#benchmarks", label: "Benchmarks" },
+  { href: "#what", label: "What it is" },
+  { href: "#coverage", label: "Coverage" },
+  { href: "#where", label: "Where it pays" },
+  { href: "#opensource", label: "Open source" },
   { href: "#install", label: "Install" },
 ];
 
