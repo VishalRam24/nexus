@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Notus React uses a tinted hero backdrop behind the offset pattern image.
+   Same idea, Nexus palette. */
+.header-bg {
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 55%, #eef2f8 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchor targets sit below the fixed navbar. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
