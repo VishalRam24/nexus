@@ -116,24 +116,27 @@ export function SectionHeading({ eyebrow, title, lede, dark = false }) {
 }
 
 /**
- * The Nexus mark — a downward chevron over an upward one, meeting in the
- * middle. The upper half carries the flux green.
+ * The Nexus mark — four strokes meeting at the centre:
  *
  *     \/
  *     /\
+ *
+ * Three of them carry the flux green; only the down-right stroke is ink.
  */
 export function NexusMark({ className = "w-5 h-5" }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      {/* top-left, top-right and down-left */}
       <path
-        d="M4.5 4.5 L12 12 L19.5 4.5"
+        d="M4.5 4.5 L12 12 L19.5 4.5 M12 12 L4.5 19.5"
         stroke="#14b8a6"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      {/* down-right only */}
       <path
-        d="M4.5 19.5 L12 12 L19.5 19.5"
+        d="M12 12 L19.5 19.5"
         stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"

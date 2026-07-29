@@ -156,11 +156,14 @@ export default function FidelityExplainer() {
         {PHASES[phase].sub}
       </p>
 
-      <div className="relative" style={{ height: 232 }}>
+      {/* The grid SVG stays in flow so the card's height follows it — a fixed
+          height clipped the bottom row of sector tiles at wider column widths.
+          Phases 2 and 3 overlay it absolutely. */}
+      <div className="relative" style={{ minHeight: 232 }}>
         {/* Phases 0–1: the sector grid */}
         <svg
           viewBox="0 0 440 220"
-          className="w-full absolute inset-0 transition-opacity duration-700"
+          className="w-full block transition-opacity duration-700"
           style={{ opacity: phase <= 1 ? 1 : 0 }}
           aria-hidden={phase > 1}
         >
@@ -180,7 +183,8 @@ export default function FidelityExplainer() {
                   x={x + (CW - 8) / 2} y={phase === 0 ? y + 26 : y + 12}
                   textAnchor="middle"
                   className="transition-all duration-700"
-                  fontSize="8.5" fontWeight="600"
+                  fontSize={s.name.length > 14 ? 7 : 8.5}
+                  fontWeight="600"
                   fill={phase === 0 ? "#ffffff" : "#6c7793"}
                 >
                   {s.name}

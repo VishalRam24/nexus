@@ -125,21 +125,13 @@ export default function Index() {
                 Energy models that answer backwards.
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ink-500">
-                If you build energy-system digital twins in Python and optimise
-                them, Nexus does the whole forward job you do today —{" "}
+                For engineers building energy-system digital twins in Python.
+                Nexus matches PyPSA and GenX exactly, runs several times faster,
+                and tells you{" "}
                 <span className="text-ink-700 font-semibold">
-                  at exact parity with PyPSA and GenX, several times faster
-                </span>
-                .
-              </p>
-              <p className="mt-3 text-lg leading-relaxed text-ink-500">
-                Then it does the part nothing else does: when the twin disagrees
-                with the real system, it tells you{" "}
-                <span className="text-ink-700 font-semibold">
-                  which of your inputs is wrong
+                  which input is wrong
                 </span>{" "}
-                — analytically, in a handful of solves instead of a
-                days-long sampling sweep.
+                — in a handful of solves, not a days-long sweep.
               </p>
 
               <div className="flex flex-wrap gap-x-8 gap-y-3 mt-8">
