@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 /**
  * Four beats through the component library, each with its own kind of motion:
@@ -12,6 +12,11 @@ import React, { useEffect, useState } from "react";
  * Beats 0→1 deliberately do not move: it is the same grid, said two ways. The
  * zoom is reserved for going a level deeper, and the slide for stepping
  * sideways into a single item.
+ *
+ * A demo cursor drives it: it travels to the real Batteries tile and the real
+ * LFP chip (measured with getBoundingClientRect, so it stays correct at any
+ * width) and clicks them, and only then does the beat advance. Clicking a step
+ * dot yourself takes over and retires the cursor.
  *
  * Every count, name and model here is the real one from Energy_Components/.
  */
@@ -130,16 +135,54 @@ function Sparkline({ id }) {
 export default function FidelityExplainer() {
   const [phase, setPhase] = useState(0);
   const [auto, setAuto] = useState(true);
+  const [cursor, setCursor] = useState({ x: 0, y: 0, show: false });
+  const [clicking, setClicking] = useState(false);
+
+  const stageRef = useRef(null);
+  const batteryRef = useRef(null);
+  const lfpRef = useRef(null);
+
+  /** Centre of a target element in stage-local pixels. */
+  const centreOf = (ref) => {
+    const stage = stageRef.current;
+    const el = ref.current;
+    if (!stage || !el) return null;
+    const s = stage.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2 };
+  };
 
   useEffect(() => {
     if (!auto) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setTimeout(() => setPhase((p) => (p + 1) % PHASES.length), HOLD[phase]);
-    return () => clearTimeout(t);
+
+    const hold = HOLD[phase];
+    const timers = [];
+    // Beats 0, 1 and 2 are advanced by a click on a real element; beat 3 just
+    // holds, drops the cursor and loops.
+    const target = phase === 2 ? lfpRef : phase < 2 ? batteryRef : null;
+
+    if (target) {
+      timers.push(
+        setTimeout(() => {
+          const c = centreOf(target);
+          if (c) setCursor({ ...c, show: true });
+        }, Math.max(200, hold - 1500))
+      );
+      timers.push(setTimeout(() => setClicking(true), hold - 420));
+      timers.push(setTimeout(() => setClicking(false), hold - 140));
+      timers.push(setTimeout(() => setPhase((p) => p + 1), hold));
+    } else {
+      timers.push(setTimeout(() => setCursor((c) => ({ ...c, show: false })), 700));
+      timers.push(setTimeout(() => setPhase(0), hold));
+    }
+    return () => timers.forEach(clearTimeout);
   }, [phase, auto]);
 
   const show = (p) => {
     setAuto(false);
+    setCursor((c) => ({ ...c, show: false }));
+    setClicking(false);
     setPhase(p);
   };
 
@@ -196,7 +239,7 @@ export default function FidelityExplainer() {
         {PHASES[phase].sub}
       </p>
 
-      <div className="relative" style={{ minHeight: 232 }}>
+      <div ref={stageRef} className="relative" style={{ minHeight: 232 }}>
         {/* ── Beats 0–1: the sector grid. In flow, so it sets the card height. ── */}
         <div style={gridStyle}>
           <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="w-full block" aria-hidden={phase > 1}>
@@ -213,6 +256,7 @@ export default function FidelityExplainer() {
               return (
                 <g key={s.name}>
                   <rect
+                    ref={i === BATTERIES ? batteryRef : undefined}
                     x={x} y={y} width={CW - 8} height={CH - 10} rx="6"
                     fill={showNumbers ? (lit ? "#0d9488" : "#14b8a6") : "#f2f4f8"}
                     opacity={showNumbers && !lit ? 0.45 : 1}
@@ -291,6 +335,7 @@ export default function FidelityExplainer() {
                   {g.items.map((c) => (
                     <span
                       key={c}
+                      ref={c === "LFP" ? lfpRef : undefined}
                       className={
                         "text-[10px] font-semibold px-1.5 py-0.5 rounded " +
                         (c === "LFP" ? "bg-flux-600 text-white" : "bg-ink-100 text-ink-600")
@@ -330,6 +375,54 @@ export default function FidelityExplainer() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* ── Demo cursor. Travels to the real target, then clicks it. ── */}
+        <div
+          data-demo-cursor
+          className="absolute"
+          style={{
+            left: 0,
+            top: 0,
+            transform: `translate(${cursor.x}px, ${cursor.y}px)`,
+            transition: "transform 900ms cubic-bezier(.33,.72,.3,1), opacity 350ms ease",
+            opacity: cursor.show ? 1 : 0,
+            pointerEvents: "none",
+            zIndex: 20,
+          }}
+          aria-hidden="true"
+        >
+          {/* click ripple, centred on the pointer tip */}
+          <span
+            className="block absolute rounded-full border-2 border-flux-500"
+            style={{
+              left: -13,
+              top: -13,
+              width: 26,
+              height: 26,
+              opacity: clicking ? 0 : 0,
+              animation: clicking ? "nx-ping 480ms ease-out" : "none",
+            }}
+          />
+          <svg
+            viewBox="0 0 24 24"
+            style={{
+              width: 20,
+              height: 20,
+              display: "block",
+              transform: clicking ? "scale(0.82)" : "scale(1)",
+              transition: "transform 140ms ease",
+              filter: "drop-shadow(0 1px 2px rgba(0,0,0,.35))",
+            }}
+          >
+            <path
+              d="M5 2.5 L5 18.2 L9.1 14.3 L11.7 20.6 L14.4 19.4 L11.8 13.2 L17.4 13.2 Z"
+              fill="#111725"
+              stroke="#ffffff"
+              strokeWidth="1.4"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       </div>
     </div>

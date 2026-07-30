@@ -111,3 +111,9 @@ section[id] {
 .dark .pattern-dark {
   display: block;
 }
+
+/* Click ripple for the explainer's demo cursor. */
+@keyframes nx-ping {
+  0%   { opacity: 0.9; transform: scale(0.35); }
+  100% { opacity: 0;   transform: scale(1.6); }
+}
