@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Icons, NexusMark } from "./ui.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const LINKS = [
   { href: "#what", label: "What it is" },
@@ -54,6 +55,9 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
+            <li className="flex items-center">
+              <ThemeToggle />
+            </li>
             <li className="flex items-center">
               <a
                 href="https://github.com/VishalRam24/nexus-energy"

@@ -3,6 +3,7 @@ import { Icons, GITHUB_PATH } from "./components/ui.jsx";
 import FidelityExplainer from "./components/FidelityExplainer.jsx";
 import CodeBlock from "./components/CodeBlock.jsx";
 import pattern from "./assets/pattern_nexus.png";
+import patternDark from "./assets/pattern_nexus_dark.png";
 
 /**
  * Mirrors the section structure of Notus React's Index.js (Creative Tim, MIT)
@@ -114,7 +115,7 @@ export default function Index() {
   return (
     <>
       {/* ── 1. Hero ─────────────────────────────────────────────── */}
-      <section className="header relative pt-16 items-center flex h-screen max-h-860-px">
+      <section className="header header-bg relative pt-16 items-center flex h-screen max-h-860-px">
         <div className="container mx-auto items-center flex flex-wrap">
           <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
             <div className="pt-32 sm:pt-0">
@@ -130,12 +131,11 @@ export default function Index() {
                 <span className="text-ink-700 font-semibold">
                   significantly faster
                 </span>
-                . Then the part none of them do: when the model disagrees with
-                reality, it{" "}
+                . Then the part none of them do: it finds the{" "}
                 <span className="text-ink-700 font-semibold">
-                  works backwards
+                  assumption behind the gap
                 </span>{" "}
-                to name the faulty assumption — a fuel cost, an efficiency.
+                between model and reality — and keeps correcting it.
               </p>
 
               <div className="mt-10">
@@ -157,9 +157,15 @@ export default function Index() {
             </div>
           </div>
         </div>
+        {/* Two variants; src/index.css shows the one matching the theme. */}
         <img
-          className="absolute top-0 b-auto right-0 pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860-px"
+          className="pattern-light absolute top-0 b-auto right-0 pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860-px"
           src={pattern}
+          alt=""
+        />
+        <img
+          className="pattern-dark absolute top-0 b-auto right-0 pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860-px"
+          src={patternDark}
           alt=""
         />
       </section>
@@ -450,7 +456,7 @@ export default function Index() {
       </section>
 
       {/* ── 3. NEW — Where the coverage stops ───────────────────── */}
-      <section id="coverage" className="block relative z-1 bg-ink-600">
+      <section id="coverage" className="block relative z-1 bg-ink-800">
         <div className="container mx-auto">
           <div className="justify-center flex flex-wrap">
             <div className="w-full lg:w-12/12 px-4 -mt-24">
@@ -509,7 +515,7 @@ export default function Index() {
       </section>
 
       {/* ── 4. Where it pays — Notus's dark card grid ───────────── */}
-      <section id="where" className="block relative z-1 bg-ink-600">
+      <section id="where" className="block relative z-1 bg-ink-800">
         <div className="container mx-auto">
           <div className="justify-center text-center flex flex-wrap pt-24">
             <div className="w-full md:w-6/12 px-12 md:px-4">
@@ -541,7 +547,7 @@ export default function Index() {
       </section>
 
       {/* ── 4. Open Source, with the oversized mark ─────────────── */}
-      <section id="opensource" className="py-20 bg-ink-600 overflow-hidden">
+      <section id="opensource" className="py-20 bg-ink-800 overflow-hidden">
         <div className="container mx-auto pb-64">
           <div className="flex flex-wrap justify-center">
             <div className="w-full md:w-5/12 px-12 md:px-4 ml-auto mr-auto md:mt-64 relative z-10">
@@ -584,11 +590,14 @@ export default function Index() {
               set smaller here to occupy the same visual footprint without
               bleeding across the copy to its left.
             */}
+            {/* The mark is the accent at low opacity, not an ink shade: ink-700
+                on an ink-800 section becomes invisible once the ramp inverts
+                for dark mode. */}
             <div className="w-full md:w-4/12 px-4 mr-auto ml-auto mt-32 relative">
               <svg
                 viewBox="0 0 496 512"
                 fill="currentColor"
-                className="text-ink-700 absolute left-auto opacity-80 hidden md:block"
+                className="text-flux-500 absolute left-auto opacity-20 hidden md:block"
                 style={{ top: "-120px", right: "-200px", width: "46rem", height: "47.5rem" }}
                 aria-hidden="true"
               >
