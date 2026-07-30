@@ -646,9 +646,9 @@ export default function Index() {
 
               <div className="max-w-2xl mx-auto">
                 <CodeBlock code="pip install nexus-energy" />
-                <p className="text-sm text-ember-600 mt-3 font-semibold text-left">
-                  PyPI release pending — the wheel matrix is built and verified,
-                  but the packages are not published yet.
+                <p className="text-sm text-ink-500 mt-3 text-left">
+                  Live on PyPI. Wheels for Linux (glibc and musl),
+                  macOS and Windows; Python 3.9+.
                 </p>
               </div>
 
