@@ -131,11 +131,11 @@ export default function Index() {
                 <span className="text-ink-700 font-semibold">
                   significantly faster
                 </span>
-                . Then the part none of them do: it finds the{" "}
+                . Then the part none of them do: it flags{" "}
                 <span className="text-ink-700 font-semibold">
-                  assumption behind the gap
+                  real-world vs. digital twin discrepancies
                 </span>{" "}
-                between model and reality — and keeps correcting it.
+                — and can even auto-calibrate corrections.
               </p>
 
               <div className="mt-10">

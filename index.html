@@ -11,18 +11,17 @@
     <!-- The Nexus mark: four strokes from the centre, only the down-right one in
          turquoise. On the dark favicon tile the other three read as white. -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23111725'/%3E%3Cpath d='M5.5 5.5 L12 12 L18.5 5.5 M12 12 L5.5 18.5' stroke='%23ffffff' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12 12 L18.5 18.5' stroke='%232dd4bf' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
-    <!-- Resolve the theme before first paint so the page never flashes the wrong one. -->
+    <!-- Resolve the theme before first paint so the page never flashes the wrong
+         one. Light is the default: dark is only used when the visitor has
+         explicitly chosen it, not when their OS happens to prefer it. -->
     <script>
       (function () {
         try {
-          var saved = localStorage.getItem("nexus-theme");
-          var dark =
-            saved === "dark" ||
-            (saved === null &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (dark) document.documentElement.classList.add("dark");
+          if (localStorage.getItem("nexus-theme") === "dark") {
+            document.documentElement.classList.add("dark");
+          }
         } catch (e) {
-          /* storage blocked — fall back to the light theme */
+          /* storage blocked — stay on the light theme */
         }
       })();
     </script>
