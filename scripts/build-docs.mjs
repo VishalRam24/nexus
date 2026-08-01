@@ -145,6 +145,9 @@ writeFileSync(
 );
 
 // ---- public/llms.txt --------------------------------------------------------
+// `public/` holds nothing but these two generated files, so git does not track
+// the directory and a fresh clone does not have it.
+mkdirSync(join(root, "public"), { recursive: true });
 // Follows the llms.txt convention: an H1, a blockquote summary, then linked
 // sections an agent can fetch selectively.
 const llms = `# Nexus
