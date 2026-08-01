@@ -3,3 +3,8 @@ dist/
 .DS_Store
 *.local
 .vite/
+
+# Generated from content/*.md by scripts/build-docs.mjs on every build.
+src/generated/
+public/llms.txt
+public/llms-full.txt

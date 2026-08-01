@@ -57,6 +57,29 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+              <div className="w-full lg:w-4/12 px-4 ml-auto">
+                <span className="block uppercase text-ink-500 text-sm font-semibold mb-2">
+                  Docs
+                </span>
+                <ul className="list-unstyled">
+                  <li>
+                    <a
+                      className="text-ink-600 hover:text-flux-600 font-semibold block pb-2 text-sm"
+                      href={`${import.meta.env.BASE_URL}docs/`}
+                    >
+                      User guide
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="text-ink-600 hover:text-flux-600 font-semibold block pb-2 text-sm font-mono"
+                      href={`${import.meta.env.BASE_URL}llms.txt`}
+                    >
+                      llms.txt
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <div className="w-full lg:w-4/12 px-4">
                 <span className="block uppercase text-ink-500 text-sm font-semibold mb-2">
                   On this page

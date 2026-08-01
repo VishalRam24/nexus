@@ -8,6 +8,8 @@ const LINKS = [
   { href: "#where", label: "Where it pays" },
   { href: "#opensource", label: "Open source" },
   { href: "#install", label: "Install" },
+  // The user guide is its own page, not a section of this one.
+  { href: `${import.meta.env.BASE_URL}docs/`, label: "Docs" },
 ];
 
 export default function Navbar() {

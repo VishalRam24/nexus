@@ -705,6 +705,27 @@ print(fit.price, fit.n_solves, fit.converged)
                   nexus-opt
                 </a>
               </div>
+
+              {/* The guide is a page of its own — the landing page only points at it. */}
+              <p className="text-ink-500 mt-8">
+                Then read the{" "}
+                <a
+                  href={`${import.meta.env.BASE_URL}docs/`}
+                  className="font-semibold text-flux-600 hover:underline"
+                >
+                  user guide
+                </a>{" "}
+                — install to first model to inverse calibration, with every
+                example executed against a clean install. Agents can read the
+                same text at{" "}
+                <a
+                  href={`${import.meta.env.BASE_URL}llms.txt`}
+                  className="font-mono text-sm text-flux-600 hover:underline"
+                >
+                  /llms.txt
+                </a>
+                .
+              </p>
               <div className="text-center mt-16"></div>
             </div>
           </div>

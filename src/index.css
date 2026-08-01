@@ -42,6 +42,14 @@
   --hero-from: 255 255 255;
   --hero-via: 247 249 252;
   --hero-to: 238 242 248;
+
+  /* Code panels are dark in both themes, but must stay distinct from the page
+     behind them — in dark mode the page itself is the near-black below. */
+  --code-bg: 17 23 37;
+  --code-border: 47 56 82;
+  --code-fg: 227 231 240;
+  --code-btn: 47 56 82;
+  --code-btn-hover: 74 85 115;
 }
 
 .dark {
@@ -73,6 +81,12 @@
   --hero-from: 17 23 37;
   --hero-via: 21 28 45;
   --hero-to: 28 35 55;
+
+  --code-bg: 28 35 55;
+  --code-border: 60 71 100;
+  --code-fg: 227 231 240;
+  --code-btn: 60 71 100;
+  --code-btn-hover: 88 100 132;
 }
 
 /* Notus tints the hero backdrop behind the offset pattern. Same idea, themed. */
@@ -116,4 +130,221 @@ section[id] {
 @keyframes nx-ping {
   0%   { opacity: 0.9; transform: scale(0.35); }
   100% { opacity: 0;   transform: scale(1.6); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Documentation prose (/docs/).
+ *
+ * The guide HTML is generated from markdown at build time, so it carries no
+ * utility classes and is styled here instead. Everything is expressed through
+ * the same `--ink` / `--flux` custom properties as the rest of the site, so
+ * dark mode inverts without a single override below.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.prose {
+  color: rgb(var(--ink-600));
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 46rem;
+}
+
+.prose > h1:first-child {
+  margin-top: 0;
+}
+
+.prose h1 {
+  color: rgb(var(--ink-800));
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 2.5rem 0 1rem;
+}
+.prose h2 {
+  color: rgb(var(--ink-800));
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 3rem 0 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgb(var(--ink-200));
+}
+.prose h3 {
+  color: rgb(var(--ink-800));
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 2rem 0 0.75rem;
+}
+.prose h4 {
+  color: rgb(var(--ink-700));
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+}
+
+/* Headings sit below the fixed navbar when linked to. */
+.prose h1[id],
+.prose h2[id],
+.prose h3[id] {
+  scroll-margin-top: 6rem;
+  position: relative;
+}
+
+/* The `#` permalink only appears on hover, so it never competes with the title. */
+.prose .anchor {
+  position: absolute;
+  left: -1.1rem;
+  color: rgb(var(--ink-300));
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.prose h1:hover .anchor,
+.prose h2:hover .anchor,
+.prose h3:hover .anchor,
+.prose .anchor:focus {
+  opacity: 1;
+}
+
+.prose p {
+  margin: 1rem 0;
+}
+
+.prose a {
+  color: rgb(var(--flux-600));
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose a:hover {
+  color: rgb(var(--flux-500));
+}
+
+.prose strong {
+  color: rgb(var(--ink-800));
+  font-weight: 600;
+}
+
+.prose ul,
+.prose ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li {
+  margin: 0.4rem 0;
+}
+.prose li::marker {
+  color: rgb(var(--ink-400));
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid rgb(var(--ink-200));
+  margin: 2.5rem 0;
+}
+
+/* Inline code — tinted rather than boxed, so tables stay readable. */
+.prose :not(pre) > code {
+  font-family: theme("fontFamily.mono");
+  font-size: 0.85em;
+  color: rgb(var(--flux-700));
+  background: rgb(var(--flux-300) / 0.16);
+  padding: 0.12em 0.35em;
+  border-radius: 0.25rem;
+  word-break: break-word;
+}
+
+/* Code blocks keep the dark panel the landing page uses, in both themes. */
+.code-wrap {
+  position: relative;
+  margin: 1.25rem 0;
+}
+.prose pre {
+  background: rgb(var(--code-bg));
+  color: rgb(var(--code-fg));
+  border: 1px solid rgb(var(--code-border));
+  border-radius: 0.5rem;
+  padding: 1.15rem 1.25rem;
+  padding-right: 4.5rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+.prose pre code {
+  font-family: theme("fontFamily.mono");
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgb(var(--code-btn));
+  color: rgb(var(--code-fg));
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  transition: background 0.12s ease;
+}
+.copy-btn:hover {
+  background: rgb(var(--code-btn-hover));
+}
+.copy-btn.copied {
+  background: rgb(var(--flux-500));
+  color: #fff;
+}
+
+/* Wide tables scroll inside their own box; the page never scrolls sideways. */
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 0.5rem;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.prose thead {
+  background: rgb(var(--ink-100));
+}
+.prose th {
+  color: rgb(var(--ink-700));
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  white-space: nowrap;
+}
+.prose td {
+  padding: 0.6rem 0.85rem;
+  border-top: 1px solid rgb(var(--ink-200));
+  vertical-align: top;
+}
+
+/* Callouts. `⚠` blockquotes carry the ember accent reserved for caveats. */
+.prose blockquote {
+  margin: 1.25rem 0;
+  padding: 0.85rem 1.1rem;
+  border-left: 3px solid rgb(var(--flux-500));
+  background: rgb(var(--flux-300) / 0.1);
+  border-radius: 0 0.375rem 0.375rem 0;
+}
+.prose blockquote.warn {
+  border-left-color: rgb(var(--ember-500));
+  background: rgb(var(--ember-400) / 0.12);
+}
+.prose blockquote > p:first-child {
+  margin-top: 0;
+}
+.prose blockquote > p:last-child {
+  margin-bottom: 0;
 }
